@@ -13,6 +13,6 @@ MAIN_timezone() {
 		sed -e 's/$/ ./' | \
 		xargs $DIALOG --title "Select your locale" --menu "$MENU_LABEL" 14 70 14 `
 	if [ $? = 0 ]; then
-		config_set TIMEZONE "$result"
+		get_option TIMEZONE "$result"
 	fi
 }

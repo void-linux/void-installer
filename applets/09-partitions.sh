@@ -47,6 +47,7 @@ MAIN_partitions() {
 	disks="`show_disks`"
     device="`$DIALOG --title " Select the disk to partition " \
         --menu "$MENULABEL" ${MENUSIZE} $disks`"
+	[ $? -ne 0 ] && return 0
 
 	menu PARTITIONS "Select Type of partition table" $device
 }

@@ -6,10 +6,12 @@
 # Distributed under terms of the MIT license.
 #
 
-DIALOG='/usr/bin/dialog --backtitle VoidLinux --stdout --colors'
+DIALOG="/usr/bin/dialog --stdout"
 CFDISK=/usr/sbin/cfdisk
 CGDISK=/usr/sbin/cgdisk
 DHCPCD=/usr/sbin/dhcpcd
+export DIALOG_ESC=1 DIALOG_EXTRA=255
+export DIALOGOPTS=" --colors --backtitle VoidLinux"
 
 # colors and attributes
 BLACK="\Z0"
@@ -34,6 +36,8 @@ INPUTSIZE="8 60"
 MSGBOXSIZE="8 70"
 YESNOSIZE="$INPUTSIZE"
 WIDGET_SIZE="10 70"
+LIBDIR=.
+
 
 trap "DIE" INT TERM QUIT
 
@@ -54,10 +58,10 @@ if [ -w /proc/sys/kernel/printk ]; then
 fi
 
 
-. ./common.sh
-. ./menu.sh
-. ./config.sh
+. $LIBDIR/common.sh
+. $LIBDIR/menu.sh
+. $LIBDIR/options.sh
 
-for i in ./applets/*.sh; do
+for i in $LIBDIR/applets/*.sh; do
 	. $i
 done

@@ -35,6 +35,13 @@ menu() {
 
 	case $res in
 		0)   ${menu}_${result} $@ ;;
+		0)
+			if type ${menu}_${result} 2> /dev/null; then
+				${menu}_${result} $@
+			else
+				type ${menu}_select 2> /dev/null && ${menu}_select $result $@
+			fi
+			;;
 		123) type ${menu}_cancel 2> /dev/null && ${menu}_cancel $@ ;;
 	esac
 }

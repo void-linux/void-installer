@@ -34,5 +34,5 @@ MAIN_rootpassword() {
 		fi
 		break;
 	done
-	config_set ROOTPASSWORD "${_firstpass}"
+	set_option ROOTPASSWORD "${_firstpass}"
 }
