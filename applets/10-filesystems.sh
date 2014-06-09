@@ -17,7 +17,7 @@ MAIN_filesystems() {
 			${MENUSIZE} $(show_partitions)`
 		[ $? -ne 0 ] && return
 
-		fstype=`DIALOG --title " Select the filesystem type for $dev " \
+		fstype=`$DIALOG --title " Select the filesystem type for $dev " \
 			--menu "$MENULABEL" ${MENUSIZE} \
 			"btrfs" "Oracle's Btrfs" \
 			"ext2" "Linux ext2 (no journaling)" \
@@ -32,16 +32,12 @@ MAIN_filesystems() {
 			continue
 		fi
 		if [ "$fstype" != "swap" ]; then
-			DIALOG --inputbox "Please specify the mount point for $dev:" ${INPUTSIZE}
-			if [ $? -eq 0 ]; then
-				mntpoint=$(cat $ANSWER)
-			elif [ $? -eq 1 ]; then
-				continue
-			fi
+			mntpoint=`$DIALOG --inputbox "Please specify the mount point for $dev:" ${INPUTSIZE}`
+			[ $? -ne 0 ] && continue
 		else
 			mntpoint=swap
 		fi
-		DIALOG --yesno "Do you want to create a new filesystem on $dev?" ${YESNOSIZE}
+		$DIALOG --yesno "Do you want to create a new filesystem on $dev?" ${YESNOSIZE}
 		if [ $? -eq 0 ]; then
 			reformat=1
 		elif [ $? -eq 1 ]; then
@@ -50,13 +46,10 @@ MAIN_filesystems() {
 			continue
 		fi
 		fssize=$(lsblk -nr $dev|awk '{print $4}')
-		set -- "$fstype" "$fssize" "$mntpoint" "$reformat"
-		if [ -n "$1" -a -n "$2" -a -n "$3" -a -n "$4" ]; then
+		if [ -n "$fstype" -a -n "$fssize" -a -n "$mntpoint" -a -n "$reformat" ]; then
 			local bdev=$(basename $dev)
-			if grep -Eq "^MOUNTPOINT \/dev\/${bdev}.*" $CONF_FILE; then
-				sed -i -e "/^MOUNTPOINT \/dev\/${bdev}.*/d" $CONF_FILE
-			fi
-			echo "MOUNTPOINT $dev $1 $2 $3 $4" >>$CONF_FILE
+			sed -i -e "/^MOUNTPOINT \/dev\/${bdev}.*/d" $CONF_FILE
+			echo "MOUNTPOINT $dev $fstype $fssize $mntpoint $reformat" >>$CONF_FILE
 		fi
     done
 }
