@@ -27,15 +27,18 @@ REVERSE="\Zr"
 UNDERLINE="\Zu"
 RESET="\Zn"
 
+# dialog sizes
 INPUTSIZE="8 60"
 MSGBOXSIZE="8 70"
-MENU_LABEL="${BOLD}Use UP and DOWN keys to navigate \
-menus. Use TAB to switch between buttons and ENTER to select.${RESET}"
 MENUSIZE="14 60 0"
 INPUTSIZE="8 60"
 MSGBOXSIZE="8 70"
 YESNOSIZE="$INPUTSIZE"
 WIDGET_SIZE="10 70"
+MENU_LABEL="${BOLD}Use UP and DOWN keys to navigate \
+menus. Use TAB to switch between buttons and ENTER to select.${RESET}"
+
+# paths
 LIBDIR=.
 
 
@@ -60,6 +63,7 @@ fi
 
 . $LIBDIR/common.sh
 . $LIBDIR/menu.sh
+. $LIBDIR/tasks.sh
 . $LIBDIR/options.sh
 
 for i in $LIBDIR/applets/*.sh; do
