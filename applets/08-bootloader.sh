@@ -14,5 +14,4 @@ MAIN_bootloader() {
 	if [ $? -eq 0 ]; then
 		set_option BOOTLOADER "$result"
 	fi
-	sleep 2
 }

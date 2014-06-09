@@ -6,47 +6,53 @@
 # Distributed under terms of the MIT license.
 #
 
+confirm_mkfs() {
+	$DIALOG --yesno "Do you really want to create a new filesystem on $dev?\n${RED}Warning: All data will be lost${RESET}" ${YESNOSIZE}
+	if [ $? = 0 ]; then
+		$@ 2>&1 | $DIALOG --progressbox "$*" 20 40
+	else
+		return 1;
+	fi
+}
 
-menu_add MAIN filesystems "Configure filesystems and mount points"
+select_mountpoint() {
+	$DIALOG --inputbox "Please specify the mount point for $1:" ${INPUTSIZE}
+}
+
+menu_add FSTYPE "reuse" "Reuse this filesystem"
+FSTYPE_reuse() {
+	local dev=$1
+	# TODO
+}
+menu_add FSTYPE "swap" "Linux swap"
+FSTYPE_swap() {
+	dev=$1
+	confirm_mkfs mkswap -- "$dev" || return
+	blkid=`blkid "$dev" -o value | head -n1`
+
+	tasks_add "FSTAB" "echo 'UUID=$blkid swap swap defaults 0 0' >> /etc/fstab"
+}
 
 menu_add FSTYPE "btrfs" "Oracle's Btrfs"
 menu_add FSTYPE "ext2" "Linux ext2 (no journaling)"
 menu_add FSTYPE "ext3" "Linux ext3 (journal)"
 menu_add FSTYPE "ext4" "Linux ext4 (journal)"
 menu_add FSTYPE "f2fs" "Flash-Friendly Filesystem"
-menu_add FSTYPE "swap" "Linux swap"
 menu_add FSTYPE "vfat" "FAT32"
 menu_add FSTYPE "xfs" "SGI's XFS"
-
 FSTYPE_select() {
-	fstype=$1
-	dev=$2
+	local type="$1" dev="$2"
+	mntpoint=`select_mountpoint $dev`
+	confirm_mkfs "mkfs" -t "$type" "$dev" || return
+	blkid=`blkid "$dev" -o value | head -n1`
 
-	if [ "$fstype" != "swap" ]; then
-		mntpoint=`$DIALOG --inputbox "Please specify the mount point for $dev:" ${INPUTSIZE}`
-		[ $? -ne 0 ] && continue
-	else
-		mntpoint=swap
-	fi
-	$DIALOG --yesno "Do you want to create a new filesystem on $dev?" ${YESNOSIZE}
-	if [ $? -eq 0 ]; then
-		reformat=1
-	elif [ $? -eq 1 ]; then
-		reformat=0
-	else
-		continue
-	fi
-	fssize=$(lsblk -nr $dev|awk '{print $4}')
-	if [ -n "$fstype" -a -n "$fssize" -a -n "$mntpoint" -a -n "$reformat" ]; then
-		local bdev=$(basename $dev)
-		sed -i -e "/^MOUNTPOINT \/dev\/${bdev}.*/d" $CONF_FILE
-		echo "MOUNTPOINT $dev $fstype $fssize $mntpoint $reformat" >>$CONF_FILE
-	fi
+	tasks_add "FSTAB" "echo 'UUID=$blkid $mntpoint $type defaults 0 0' >> etc/fstab"
 }
 
 
+menu_add MAIN filesystems "Configure filesystems and mount points"
 MAIN_filesystems() {
-	local dev fstype fssize mntpoint reformat
+	local
 
 	while true; do
 		dev=`$DIALOG --title " Select the partition to edit " --menu "$MENULABEL" \

@@ -34,15 +34,14 @@ menu() {
 	CURRENT_ITEMS=`echo "$CURRENT_ITEMS" | grep -v "^$menu:"; echo $menu:$result`
 
 	case $res in
-		0)   ${menu}_${result} $@ ;;
 		0)
-			if type ${menu}_${result} 2> /dev/null; then
+			if type ${menu}_${result} > /dev/null 2>&1; then
 				${menu}_${result} $@
 			else
-				type ${menu}_select 2> /dev/null && ${menu}_select $result $@
+				type ${menu}_select > /dev/null 2>&1 && ${menu}_select $result $@
 			fi
 			;;
-		123) type ${menu}_cancel 2> /dev/null && ${menu}_cancel $@ ;;
+		123) type ${menu}_cancel > /dev/null 2>&1 && ${menu}_cancel $@ ;;
 	esac
 }
 

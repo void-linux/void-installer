@@ -10,7 +10,13 @@ menu_add MAIN partitions "Partition disk(s)"
 
 menu_add PARTITIONS gpt "Create GPT partition table (BIOS and EFI)"
 PARTITIONS_gpt() {
-	device=$1
+	local disks= device=
+
+	disks="`show_disks`"
+	device="`$DIALOG --title " Select the disk to partition " \
+		--menu "$MENULABEL" ${MENUSIZE} $disks`"
+	[ $? -ne 0 ] && return 0
+
 
 	$DIALOG --title "Modify Partition Table on $device" --msgbox "\n
 ${BOLD}cgdisk will be executed for disk $device.${RESET}\n\n
@@ -25,12 +31,18 @@ For swap, RAM*2 must be really enough. For / 600MB are required.\n\n
 ${BOLD}WARNING: /usr is not supported as a separate partition.${RESET}\n
 ${BOLD}WARNING: changes made by parted are destructive, you've been warned.
 ${RESET}\n" 18 80
+
 	$CGDISK $device
+	partprobe
 }
 
 menu_add PARTITIONS mbr "Create MBR partition table (BIOS)"
 PARTITIONS_mbr() {
-	device=$1
+	local disks= device=
+	disks="`show_disks`"
+	device="`$DIALOG --title " Select the disk to partition " \
+		--menu "$MENULABEL" ${MENUSIZE} $disks`"
+	[ $? -ne 0 ] && return 0
 
 	$DIALOG --title "Modify Partition Table on $device" --msgbox "\n
 ${BOLD}cfdisk will be executed for disk $device.${RESET}\n\n
@@ -39,15 +51,12 @@ For swap, RAM*2 must be really enough. For / 600MB are required.\n\n
 ${BOLD}WARNING: /usr is not supported as a separate partition.${RESET}\n
 ${BOLD}WARNING: changes made by parted are destructive, you've been warned.
 ${RESET}\n" 18 80
+
 	$CFDISK $device
+	partprobe
 }
 
 MAIN_partitions() {
-	local disks= device=
-	disks="`show_disks`"
-    device="`$DIALOG --title " Select the disk to partition " \
-        --menu "$MENULABEL" ${MENUSIZE} $disks`"
-	[ $? -ne 0 ] && return 0
 
 	menu PARTITIONS "Select Type of partition table" $device
 }

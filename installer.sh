@@ -11,7 +11,7 @@ CFDISK=/usr/sbin/cfdisk
 CGDISK=/usr/sbin/cgdisk
 DHCPCD=/usr/sbin/dhcpcd
 export DIALOG_ESC=1 DIALOG_EXTRA=255
-export DIALOGOPTS=" --colors --backtitle VoidLinux"
+export DIALOGOPTS=" --colors --backtitle \"VoidLinux - Please fasten your seatbelt\""
 
 # colors and attributes
 BLACK="\Z0"
@@ -63,7 +63,7 @@ fi
 
 . $LIBDIR/common.sh
 . $LIBDIR/menu.sh
-. $LIBDIR/tasks.sh
+. $LIBDIR/task.sh
 . $LIBDIR/options.sh
 
 for i in $LIBDIR/applets/*.sh; do
