@@ -11,8 +11,9 @@ menu_add MAIN "keyboard" "Set system keyboard"
 MAIN_keyboard() {
     result=`localectl --no-pager list-keymaps | \
 		sed "s/$/ -/" | \
-		xargs $DIALOG --title "Select your keymap" --menu "$MENU_LABEL" 0 70 0`
-	if [ $? -eq 0 ]; then
-		loadkeys $result;
-	fi
+		xargs $DIALOG --title "Select your keymap" --menu "$MENU_LABEL" $MENUSIZE`
+	[ $? -eq 0 ] || return 1;
+
+	loadkeys $result;
+	reached keyboard
 }

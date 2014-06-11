@@ -9,5 +9,8 @@
 
 menu_add "MAIN" install "Start installation"
 MAIN_install() {
-	:
+	is_reached "Please configure the following before you start the installation" \
+		keyboard \
+		partition
+	return 1
 }

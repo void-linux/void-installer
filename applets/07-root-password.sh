@@ -34,5 +34,5 @@ MAIN_rootpassword() {
 		fi
 		break;
 	done
-	set_option ROOTPASSWORD "${_firstpass}"
+	reached rootpassword
 }

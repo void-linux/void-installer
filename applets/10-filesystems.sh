@@ -30,7 +30,7 @@ FSTYPE_swap() {
 	confirm_mkfs mkswap -- "$dev" || return
 	blkid=`blkid "$dev" -o value | head -n1`
 
-	tasks_add "FSTAB" "echo 'UUID=$blkid swap swap defaults 0 0' >> /etc/fstab"
+	task_add "FSTAB" "$dev" "echo 'UUID=$blkid swap swap defaults 0 0' >> etc/fstab"
 }
 
 menu_add FSTYPE "btrfs" "Oracle's Btrfs"
@@ -46,7 +46,7 @@ FSTYPE_select() {
 	confirm_mkfs "mkfs" -t "$type" "$dev" || return
 	blkid=`blkid "$dev" -o value | head -n1`
 
-	tasks_add "FSTAB" "echo 'UUID=$blkid $mntpoint $type defaults 0 0' >> etc/fstab"
+	task_add "FSTAB" "$dev" "echo 'UUID=$blkid $mntpoint $type defaults 0 0' >> etc/fstab"
 }
 
 
