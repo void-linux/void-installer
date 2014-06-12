@@ -9,10 +9,16 @@
 
 menu_add MAIN timezone "Set system time zone"
 MAIN_timezone() {
-    result=`timedatectl --no-pager list-timezones | \
-		sed -e 's/$/ ./' | \
-		xargs $DIALOG --title "Select your locale" --menu "$MENU_LABEL" 14 70 14 `
-	if [ $? = 0 ]; then
-		get_option TIMEZONE "$result"
-	fi
+	tz=`timedatectl --no-pager list-timezones | sed -e 's/$/ ./'`
+	while : ; do
+		region=`echo "$tz" | sed 's#/[^ ]*##' | sort -u | \
+			xargs $DIALOG --title "Select your time zone region" --menu "$MENU_LABEL" 14 70 14 `
+		[ $? = 0 ] || return 1;
+
+		city=`echo "$tz" | grep "^${region}/" | sed 's#[^/]*/##' | \
+			xargs $DIALOG --title "Select your time zone" --menu "$MENU_LABEL" 14 70 14 `
+		[ $? = 0 ] && break;
+	done
+
+	get_option TIMEZONE "$result"
 }

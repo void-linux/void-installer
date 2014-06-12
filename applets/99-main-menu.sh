@@ -22,6 +22,6 @@ ${BOLD}http://www.voidlinux.eu${RESET}\n\n" 16 80
 
 RUNNING=1
 while [ "$RUNNING" ]; do
-	menu MAIN "Void Installer"
+	DOPTS='--cancel-label Exit' menu MAIN "Void Installer"
 done
 clear;

@@ -27,9 +27,9 @@ menu() {
 	current_item=`echo "$CURRENT_ITEMS" | grep "^$menu:" | cut -d: -f2-`
 	result=`echo "$MENU_ENTRIES" | grep "^$menu:" | cut -d: -f2- | \
 		xargs -d '\n' \
-		$DIALOG --default-item "$current_item" \
+		$DIALOG $DOPTS --default-item "$current_item" \
 			--title "$title" \
-			--menu "$MENU_LABEL" 10 70 0`
+			--menu "$MENU_LABEL" $MENUSIZE`
 	res=$?
 	CURRENT_ITEMS=`echo "$CURRENT_ITEMS" | grep -v "^$menu:"; echo $menu:$result`
 

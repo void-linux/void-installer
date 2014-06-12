@@ -11,7 +11,7 @@ CFDISK=/usr/sbin/cfdisk
 CGDISK=/usr/sbin/cgdisk
 DHCPCD=/usr/sbin/dhcpcd
 export DIALOG_ESC=1 DIALOG_EXTRA=255
-export DIALOGOPTS=" --colors --backtitle \"VoidLinux - Please fasten your seatbelt\""
+export DIALOGOPTS=" --colors --backtitle \"VoidLinux - Please fasten your seatbelt\" --cancel-label \"Back\""
 
 # colors and attributes
 BLACK="\Z0"

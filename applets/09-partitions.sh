@@ -10,11 +10,9 @@ menu_add MAIN partitions "Partition disk(s)"
 
 menu_add PARTITIONS gpt "Create GPT partition table (BIOS and EFI)"
 PARTITIONS_gpt() {
-	local disks= device=
+	local device=
 
-	disks="`show_disks`"
-	device="`$DIALOG --title " Select the disk to partition " \
-		--menu "$MENULABEL" ${MENUSIZE} $disks`"
+	device=`select_disk`
 	[ $? -ne 0 ] && return 0
 
 
@@ -38,10 +36,9 @@ ${RESET}\n" 18 80
 
 menu_add PARTITIONS mbr "Create MBR partition table (BIOS)"
 PARTITIONS_mbr() {
-	local disks= device=
-	disks="`show_disks`"
-	device="`$DIALOG --title " Select the disk to partition " \
-		--menu "$MENULABEL" ${MENUSIZE} $disks`"
+	local device=
+
+	device=`select_disk`
 	[ $? -ne 0 ] && return 0
 
 	$DIALOG --title "Modify Partition Table on $device" --msgbox "\n

@@ -55,8 +55,7 @@ MAIN_filesystems() {
 	local
 
 	while true; do
-		dev=`$DIALOG --title " Select the partition to edit " --menu "$MENULABEL" \
-			${MENUSIZE} $(show_partitions)`
+		dev=`select_partition`
 		[ $? -ne 0 ] && return
 
 		menu FSTYPE "Select the filesystem type for $dev" $dev

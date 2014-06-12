@@ -9,8 +9,7 @@
 
 menu_add MAIN bootloader "Set disk to install bootloader"
 MAIN_bootloader() {
-	result=`$DIALOG --title "Select the disk to install the bootloader" \
-		--menu "$MENU_LABEL" ${MENUSIZE} $(show_disks)`
+	result=`select_disk`
 	if [ $? -eq 0 ]; then
 		set_option BOOTLOADER "$result"
 	fi
