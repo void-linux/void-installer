@@ -15,7 +15,9 @@ MAIN_keyboard() {
 	[ $? -eq 0 ] || return 1;
 
 	loadkeys $result;
-	export SETTINGS_KEYBOARD=$result
+	task_add "KEYBOARD" "" sed "s/^KEYMAP=.*/KEYMAP=$result/" etc/vconsole.conf
+}
 
-	reached keyboard
+REACHED_keyboard() {
+	task_exists "KEYBOARD"
 }
