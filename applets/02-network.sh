@@ -25,12 +25,12 @@ list_nic() {
 }
 
 select_nic() {
-	if [ `list_nic $@ | wc -l` -le 1 ]; then
-		list_nic $@
-		return $?
-	fi
-	list_nic $@ | sed "s/$/ ./" | \
-		xargs $DIALOG --title "Select your keymap" --menu "$MENU_LABEL" 0 70 0
+	case `list_nic $@ | wc -l` in
+	1) list_nic $@ ;;
+	0) $DIALOG --msgbox "No matching NICs found." $MSGBOXSIZE; return 1 ;;
+	*) list_nic $@ | sed "s/$/ ./" | \
+		xargs $DIALOG --title "Select NIC" --menu "$MENU_LABEL" 0 70 0;;
+	esac
 }
 
 menu_add MAIN "network" "Set up the network"
