@@ -10,17 +10,18 @@
 menu_add MAIN "source" "Set source installation"
 
 MAIN_source() {
-    local src=
+	local src=
 
-    result=`$DIALOG --title " Select installation source " \
-        --menu "$MENU_LABEL" 8 70 0 \
-        "local" "Packages from ISO image" \
-        "network" "Packages from official remote reposity"`
+	result=`$DIALOG --title " Select installation source " \
+		--menu "$MENU_LABEL" 8 70 0 \
+		"local" "Packages from ISO image" \
+		"network" "Packages from official remote reposity"`
 
-    case "$result" in
-        "local") src="local" ;;
-        "network") src="net" ;;
-        *) return 1;;
-    esac
-    set_option SOURCE $src
+	case "$result" in
+		"local") src="local" ;;
+		"network") src="net" ;;
+		*) return 1;;
+	esac
+	set_option SOURCE $src
+	reached source
 }
