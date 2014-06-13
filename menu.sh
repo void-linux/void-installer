@@ -52,3 +52,13 @@ menu_add() {
 
 	MENU_ENTRIES="$MENU_ENTRIES\n$menu:$name\n$menu:$desc"
 }
+
+menu_next_entry() {
+	set -x
+	menu=$1
+	current_item=`echo "$CURRENT_ITEMS" | grep "^$menu:"`
+	next_entry=`echo "$MENU_ENTRIES"  | grep "^$menu"| grep -A 2 "^$current_item"`
+	if [ `echo "$next_entry" | wc -l` -eq 3 ]; then
+		CURRENT_ITEMS=`echo "$CURRENT_ITEMS" | grep -v "^$menu:"; echo "$next_entry" | tail -n 1`
+	fi
+}
