@@ -65,6 +65,7 @@ fi
 . $LIBDIR/menu.sh
 . $LIBDIR/task.sh
 . $LIBDIR/reached.sh
+. $LIBDIR/options.sh
 
 for i in $LIBDIR/applets/*.sh; do
 	. $i
