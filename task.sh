@@ -10,7 +10,8 @@ TASKS=
 task_add() {
 	task=$1
 	id=$2
-	cmd=$3
+	shift 2
+	cmd=$@
 	task_remove "$task:$id"
 	TASKS="$TASKS\n$task:$id:$cmd"
 }
@@ -24,7 +25,17 @@ task_run() {
 }
 
 task_remove() {
+	task=$1
 	for task; do
 		TASKS=`echo "$TASKS" | grep -v "^$task:"`
 	done
+}
+
+task_exists() {
+	task=$1
+	id=$2
+
+	[ "$id" ] && task="$task:$id"
+
+	echo "$TASKS" | grep "^$task:" > /dev/null
 }
