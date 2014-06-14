@@ -6,18 +6,18 @@
 # Distributed under terms of the MIT license.
 #
 
-menu_add MAIN "keyboard" "Set system keyboard"
+menu_add MAIN "keymap" "Set system keymap"
 
-MAIN_keyboard() {
+MAIN_keymap() {
     result=`localectl --no-pager list-keymaps | \
 		sed "s/$/ -/" | \
 		xargs $DIALOG --title "Select your keymap" --menu "$MENU_LABEL" $MENUSIZE`
 	[ $? -eq 0 ] || return 1;
 
 	loadkeys $result;
-	task_add "KEYBOARD" "" sed "s/^KEYMAP=.*/KEYMAP=$result/" etc/vconsole.conf
+	task_add "KEYMAP" "" sed "s/^KEYMAP=.*/KEYMAP=$result/" etc/vconsole.conf
 }
 
-REACHED_keyboard() {
-	task_exists "KEYBOARD"
+REACHED_keymap() {
+	task_exists "KEYMAP"
 }
