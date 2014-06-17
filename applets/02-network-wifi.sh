@@ -12,7 +12,6 @@ WIFI_select() {
 }
 
 NETWORK_wifi() {
-	set -x
 	while : ; do
 		device=`select_nic wireless` || return 1
 		menu WIFI "$device" && break;

@@ -1,7 +1,7 @@
 void-installer
 ==============
 
-void installer is a installer which will be on
+void-installer is a installer which will be on
 [void-linux](http://voidlinux.eu) Live CDs. It is the successor of the old
 void-installer of void-mklive.
 
@@ -20,6 +20,8 @@ menu.sh for further information. As of now, the following menus exist:
   selects "partitions" on the MAIN menu.
 * ```NETWORK``` - this menu is called when the user
   selects "network" on the MAIN menu.
+* ```FSTYPE``` - this menu is called to select the filesystem
+  of a block device
 
 an example applet looks like the following
 

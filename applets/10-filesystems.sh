@@ -22,8 +22,11 @@ select_mountpoint() {
 menu_add FSTYPE "reuse" "Reuse this filesystem"
 FSTYPE_reuse() {
 	local dev=$1
+
 	# TODO
+	$DIALOG --msgbox "Not implemented yet" $MSGBOXSIZE
 }
+
 menu_add FSTYPE "swap" "Linux swap"
 FSTYPE_swap() {
 	dev=$1
@@ -46,6 +49,7 @@ FSTYPE_select() {
 	confirm_mkfs "mkfs" -t "$type" "$dev" || return
 	blkid=`blkid "$dev" -o value | head -n1`
 
+	task_add "MOUNT" "$dev" "mount -t $type $dev ${mntpoint#/}"
 	task_add "FSTAB" "$dev" "echo 'UUID=$blkid $mntpoint $type defaults 0 0' >> etc/fstab"
 }
 

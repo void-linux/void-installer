@@ -10,6 +10,9 @@ DIALOG="/usr/bin/dialog --stdout"
 CFDISK=/usr/sbin/cfdisk
 CGDISK=/usr/sbin/cgdisk
 DHCPCD=/usr/sbin/dhcpcd
+LOGTTY=/dev/tty7
+TARGETDIR=/mnt/target
+
 export DIALOG_ESC=1 DIALOG_EXTRA=255
 export DIALOGOPTS=" --colors --backtitle \"VoidLinux - Please fasten your seatbelt\" --cancel-label \"Back\""
 

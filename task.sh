@@ -20,7 +20,7 @@ task_run() {
 	task=$1
 	dir=$2
 	cd "$2"
-	echo "$TASKS" | grep "^$task:" | cut -d: -f3- | xargs -l 1 /bin/sh -c
+	echo "$TASKS" | grep "^$task:" | sort | cut -d: -f3- | xargs -l 1 /bin/sh -c
 	cd -
 }
 

@@ -6,7 +6,7 @@
 # Distributed under terms of the MIT license.
 #
 
-LSBLK_OPTS='-P -o NAME,FSTYPE,MOUNTPOINT,SIZE,TYPE'
+LSBLK_OPTS='-pP -o NAME,FSTYPE,MOUNTPOINT,SIZE,TYPE'
 
 disk_menu() {
 	while read line; do
