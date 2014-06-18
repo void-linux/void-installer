@@ -1,7 +1,7 @@
 # MENU
 # ====
 # Menu is a wrapper around `dialog` to ease the usage of complex menu systems
-# it is written in in Posix compliant shell script.
+# it is written in Posix compliant shell script.
 # It consists of the following commands:
 #
 # menu_add MENU ITEM_NAME DESCRIPTION
