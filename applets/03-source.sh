@@ -15,7 +15,7 @@ MAIN_source() {
 	result=`$DIALOG --title " Select installation source " \
 		--menu "$MENU_LABEL" 8 70 0 \
 		"local" "Packages from ISO image" \
-		"network" "Packages from official remote reposity"`
+		"network" "Packages from official remote repository"`
 
 	case "$result" in
 		"local") src="local" ;;
