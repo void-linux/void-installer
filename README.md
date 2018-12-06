@@ -2,7 +2,7 @@ void-installer
 ==============
 
 void-installer is a installer which will be on
-[void-linux](http://voidlinux.eu) Live CDs. It is the successor of the old
+[void-linux](https://voidlinux.org) Live CDs. It is the successor of the old
 void-installer of void-mklive.
 
 Applets
