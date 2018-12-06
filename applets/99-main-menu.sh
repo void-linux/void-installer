@@ -18,7 +18,7 @@ Linux distribution made from scratch and built from the source package tree \
 available for XBPS, a new alternative binary package system.\n\n
 The installation should be pretty straightforward, if you are in trouble \
 please join us at ${BOLD}#xbps on irc.freenode.org${RESET}.\n\n
-${BOLD}http://www.voidlinux.eu${RESET}\n\n" 16 80
+${BOLD}https://www.voidlinux.org${RESET}\n\n" 16 80
 
 RUNNING=1
 while [ "$RUNNING" ]; do
